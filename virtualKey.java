@@ -1,30 +1,25 @@
 package lockedMe;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
-
-public class virtualKey
-{
 
 public class VirtualKey
 {
 	
 	//class instance variables
 	private static String targetDirectory=null;
-	private static String addFileName=null;
 	private static Scanner sc;
-	private static Path myFile;
-	private static List<File> fileList=new ArrayList<File>();
 	private static int numFilesinDirectory=0;
 	static String file = null;
 	static String fileName = null;
@@ -40,7 +35,7 @@ public class VirtualKey
 	}
 	private static void setTargetDirectory()
 	{
-		targetDirectory ="D:\\JavaPrograms\\Java Learn\\Phase1Project\\Phase1ProjectDemo2\\src\\lockedMe\\Directory";
+		targetDirectory ="D:\\Java Project\\LockedMe\\src\\lockedMe\\Directory";
 	}
 	private static void determineDirectory()
 	{
@@ -57,7 +52,7 @@ public class VirtualKey
 			else
 			{
 				System.out.println("Please enter valid Info..");
-				determineDirectory(); //Recursion
+				determineDirectory(); 
 			}
 		}catch(InputMismatchException e)
 		{
@@ -68,7 +63,6 @@ public class VirtualKey
 	public static void propagateException() throws InterruptedException
 	{
 	    Thread.sleep(2000);
-//	    Thread.currentThread().interrupt();
 	    if (Thread.interrupted())
 	    {
 	        throw new InterruptedException();
@@ -159,9 +153,11 @@ public class VirtualKey
 
 		int fileCount=0;
 		Path dirPath=Path.of(targetDirectory);
-		DirectoryStream<Path> stream = Files.newDirectoryStream(dirPath); //By default sorting() method sorts the list in ascending order
+		DirectoryStream<Path> stream = Files.newDirectoryStream(dirPath); 
 		if(Files.isDirectory(dirPath) && Files.exists(dirPath))
 		{
+			// Create an ArrayList of Path objects 
+			ArrayList<Path> filesList = new ArrayList<>();
 			for (Path path : stream)
 			{
 	            if (Files.isRegularFile(path))
@@ -170,6 +166,12 @@ public class VirtualKey
 	                fileCount++;
 	            }
 	        }
+			// Sort the ArrayList alphabetically
+			Collections.sort(filesList);
+						
+			// Print out the sorted list of files
+			for(Path p : filesList)
+				System.out.println(p.getFileName());
 		}
 		
 		numFilesinDirectory=fileCount;
@@ -358,4 +360,4 @@ public class VirtualKey
 	    }
 	}
 }
-}
+
